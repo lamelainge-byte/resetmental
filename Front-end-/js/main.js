@@ -9,6 +9,8 @@
  * - Modales y interacciones generales
  */
 
+const APP_API_BASE_URL = window.apiClient?.API_BASE_URL || '';
+
 class ResetMentalApp {
     constructor() {
         this.init();
@@ -19,8 +21,31 @@ class ResetMentalApp {
         this.setupAccessibility();
         this.setupNotifications();
         this.setupLazyLoading();
+        this.setupRoleBasedUI();
 
         console.log('ResetMental App inicializada');
+    }
+
+    /**
+     * Configurar UI basada en roles
+     */
+    setupRoleBasedUI() {
+        if (!window.apiClient) return;
+
+        const session = window.apiClient.getSession();
+        // Solo actualizar si hay una sesión activa
+        if (!session || !session.user) return;
+
+        const isPsychologist = window.apiClient.isPsychologist();
+
+        if (isPsychologist) {
+            // Cambiar enlaces en el hero que apunten a psicólogos
+            const psicologosHeroLink = document.querySelector('a[href*="psicologos.html"]');
+            if (psicologosHeroLink) {
+                psicologosHeroLink.textContent = 'Mis Citas';
+                psicologosHeroLink.setAttribute('href', 'pages/usuarios.html');
+            }
+        }
     }
 
     /**
@@ -39,7 +64,7 @@ class ResetMentalApp {
     /**
      * Manejar envío del formulario de contacto
      */
-    handleContactForm(form) {
+    async handleContactForm(form) {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
 
@@ -48,9 +73,50 @@ class ResetMentalApp {
             return;
         }
 
-        // Simular envío
-        this.showNotification('Mensaje enviado correctamente. Te responderemos pronto.', 'success');
-        form.reset();
+        if (!APP_API_BASE_URL) {
+            this.showNotification('Configura la URL del backend para enviar el mensaje.', 'error');
+            return;
+        }
+
+        const session = window.apiClient?.getSession();
+        if (!session?.access) {
+            this.showNotification('Debes iniciar sesión para enviar tu PQRS.', 'error');
+            return;
+        }
+
+        if (!session?.user?.customer_id) {
+            this.showNotification('Solo los clientes pueden enviar PQRS. Si eres psicólogo, usa otra cuenta.', 'error');
+            return;
+        }
+
+        try {
+            const payload = {
+                customer: session.user.customer_id,
+                pqrs_tipo: 'PETICION',
+                asunto: data.subject || 'Contacto',
+                descripcion: data.message,
+            };
+
+            console.log('Enviando PQRS con payload:', payload);
+            console.log('Token de autenticación:', session.access ? 'Presente' : 'Ausente');
+
+            const response = await fetch(`${APP_API_BASE_URL}/pqrs/`, {
+                method: 'POST',
+                headers: window.apiClient.authHeaders(),
+                body: JSON.stringify(payload),
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                const detail = result?.detail || 'No pudimos enviar tu mensaje.';
+                throw new Error(detail);
+            }
+
+            this.showNotification('Mensaje enviado correctamente. Te responderemos pronto.', 'success');
+            form.reset();
+        } catch (error) {
+            this.showNotification(error.message, 'error');
+        }
     }
 
     /**
@@ -386,7 +452,7 @@ class ResetMentalApp {
     setupPQRForm() {
         const form = document.getElementById('pqr-form');
         if (form) {
-            form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
                 // Validar formulario
@@ -394,15 +460,84 @@ class ResetMentalApp {
                     return;
                 }
 
-                // Procesar envío
+                if (!APP_API_BASE_URL) {
+                    this.showNotification('Configura la URL del backend para enviar PQRS.', 'error');
+                    return;
+                }
+
+                const session = window.apiClient?.getSession();
+                if (!session?.access) {
+                    this.showNotification('Debes iniciar sesión para enviar una PQRS.', 'error');
+                    return;
+                }
+
+                if (!session?.user?.customer_id) {
+                    this.showNotification('Solo los clientes pueden enviar PQRS. Si eres psicólogo, usa otra cuenta.', 'error');
+                    return;
+                }
+
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData);
 
-                // Aquí se podría enviar a un endpoint
-                // await this.submitPQR(data);
+                const typeMap = {
+                    peticion: 'PETICION',
+                    queja: 'QUEJA',
+                    reclamo: 'RECLAMO',
+                    sugerencia: 'SUGERENCIA',
+                };
 
-                this.showNotification('Tu PQRS ha sido enviado correctamente. Te responderemos en un plazo máximo de 10 días hábiles.', 'success');
-                form.closest('.wellness-modal').remove();
+                const payload = {
+                    customer: session.user.customer_id,
+                    pqrs_tipo: typeMap[data.type] || 'PETICION',
+                    asunto: data.subject,
+                    descripcion: data.message,
+                };
+
+                console.log('Enviando PQRS:', payload);
+                console.log('Usuario:', session.user);
+                console.log('Token presente:', !!session.access);
+                console.log('Token (primeros 20 chars):', session.access ? session.access.substring(0, 20) + '...' : 'No hay token');
+
+                try {
+                    // Usar fetchWithAuth si está disponible, sino usar fetch normal
+                    const fetchFn = window.apiClient?.fetchWithAuth || fetch;
+
+                    const headers = window.apiClient.authHeaders();
+                    console.log('Headers enviados:', { ...headers, Authorization: headers.Authorization ? 'Bearer ***' : 'No Authorization' });
+
+                    const response = await fetchFn(`${APP_API_BASE_URL}/pqrs/`, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(payload),
+                    });
+
+                    let result;
+                    try {
+                        result = await response.json();
+                    } catch (jsonError) {
+                        // Si la respuesta no es JSON (ej: HTML de error 500)
+                        const text = await response.text();
+                        console.error('Error del servidor (no JSON):', text);
+                        throw new Error(`Error del servidor (${response.status}): ${response.statusText}`);
+                    }
+
+                    if (!response.ok) {
+                        // Si es error de autenticación, sugerir re-login
+                        if (response.status === 401) {
+                            window.apiClient?.clearSession();
+                            throw new Error('Tu sesión expiró. Por favor, inicia sesión nuevamente.');
+                        }
+
+                        const detail = result?.detail || result?.error || `Error ${response.status}: ${response.statusText}`;
+                        throw new Error(detail);
+                    }
+
+                    this.showNotification('Tu PQRS ha sido enviada correctamente. Te responderemos en un plazo máximo de 10 días hábiles.', 'success');
+                    form.closest('.wellness-modal').remove();
+                } catch (error) {
+                    console.error('Error al enviar PQRS:', error);
+                    this.showNotification(error.message || 'No pudimos enviar tu PQRS. Intenta de nuevo.', 'error');
+                }
             });
         }
     }

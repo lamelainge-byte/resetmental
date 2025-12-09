@@ -1,7 +1,10 @@
 /**
  * ResetMental - Página de Psicólogos
  * Maneja la funcionalidad de búsqueda, filtros y visualización de psicólogos
+ * Última actualización: 2025-01-27 - Dr. Luis Fernández actualizado
  */
+
+const PSICO_API_BASE_URL = window.apiClient?.API_BASE_URL || '';
 
 /**
  * Utilidades para formateo de precios en pesos colombianos
@@ -33,166 +36,108 @@ class PsychologistsManager {
     }
 
     init() {
-        this.loadPsychologists();
         this.setupEventListeners();
-        this.renderPsychologists();
+        this.loadPsychologists();
 
-        console.log('👥 ResetMental Psychologists Manager inicializado');
+        console.log('👥 ResetMental Psychologists Manager inicializado - v3');
+        console.log('Dr. Luis Fernández - Especialidad:', this.psychologists.find(p => p.id === 4)?.specialty, 'Precio:', this.psychologists.find(p => p.id === 4)?.price);
     }
 
     /**
      * Cargar datos de psicólogos
      */
-    loadPsychologists() {
-        // Datos simulados de psicólogos
-        this.psychologists = [
-            {
-                id: 1,
-                name: "Dra. María González",
-                image: "ana-gonzalez.jpg",
-                specialty: "Bienestar Digital",
-                rating: 4.9,
-                reviews: 127,
-                price: 45000,
-                location: "Virtual",
-                avatar: "MG",
-                description: "Especialista en bienestar digital con más de 8 años de experiencia ayudando a personas a encontrar equilibrio en su relación con la tecnología.",
-                experience: "8 años",
-                education: "Psicología Clínica - Universidad Nacional",
-                certifications: ["Terapia Cognitiva", "Mindfulness", "Bienestar Digital"],
-                availability: {
-                    "Lunes": "9:00 - 17:00",
-                    "Martes": "9:00 - 17:00",
-                    "Miércoles": "9:00 - 17:00",
-                    "Jueves": "9:00 - 17:00",
-                    "Viernes": "9:00 - 15:00"
-                },
-                languages: ["Español", "Inglés"],
-                approach: "Terapia cognitivo-conductual enfocada en el bienestar digital y la gestión del estrés tecnológico."
-            },
-            {
-                id: 2,
-                name: "Dr. Carlos Rodríguez",
-                image: "carlos-rodriguez.jpg",
-                specialty: "Ansiedad y Estrés",
-                rating: 4.8,
-                reviews: 95,
-                price: 120000,
-                location: "Híbrida",
-                avatar: "CR",
-                description: "Psicólogo especializado en trastornos de ansiedad y estrés, con enfoque en técnicas de relajación y mindfulness.",
-                experience: "10 años",
-                education: "Psicología - Universidad de los Andes",
-                certifications: ["EMDR", "Terapia de Aceptación y Compromiso", "Mindfulness"],
-                availability: {
-                    "Lunes": "8:00 - 18:00",
-                    "Martes": "8:00 - 18:00",
-                    "Miércoles": "8:00 - 18:00",
-                    "Jueves": "8:00 - 18:00",
-                    "Sábado": "9:00 - 13:00"
-                },
-                languages: ["Español"],
-                approach: "Terapia integrativa combinando técnicas cognitivo-conductuales con mindfulness y relajación."
-            },
-            {
-                id: 3,
-                name: "Dra. Ana Martínez",
-                image: "maria-fernandez.jpg",
-                specialty: "Terapia Cognitiva",
-                rating: 4.9,
-                reviews: 156,
-                price: 140000,
-                location: "Presencial",
-                avatar: "AM",
-                description: "Especialista en terapia cognitivo-conductual con amplia experiencia en depresión y trastornos del estado de ánimo.",
-                experience: "12 años",
-                education: "Psicología Clínica - Universidad Javeriana",
-                certifications: ["TCC", "Terapia Dialéctica", "Neuropsicología"],
-                availability: {
-                    "Lunes": "7:00 - 19:00",
-                    "Martes": "7:00 - 19:00",
-                    "Miércoles": "7:00 - 19:00",
-                    "Jueves": "7:00 - 19:00",
-                    "Viernes": "7:00 - 16:00"
-                },
-                languages: ["Español", "Francés"],
-                approach: "Terapia cognitivo-conductual estructurada con énfasis en la reestructuración cognitiva y técnicas de afrontamiento."
-            },
-            {
-                id: 4,
-                name: "Dr. Luis Fernández",
-                image: "luis-fernandez.jpg",
-                specialty: "Mindfulness",
-                rating: 4.7,
-                reviews: 89,
-                price: 35000,
-                location: "Virtual",
-                avatar: "LF",
-                description: "Instructor certificado de mindfulness y meditación, especializado en reducción del estrés y bienestar emocional.",
-                experience: "6 años",
-                education: "Psicología - Universidad del Rosario",
-                certifications: ["MBSR", "Mindfulness", "Meditación"],
-                availability: {
-                    "Lunes": "10:00 - 20:00",
-                    "Martes": "10:00 - 20:00",
-                    "Miércoles": "10:00 - 20:00",
-                    "Jueves": "10:00 - 20:00",
-                    "Domingo": "9:00 - 15:00"
-                },
-                languages: ["Español", "Inglés"],
-                approach: "Programa de reducción del estrés basado en mindfulness (MBSR) y técnicas de meditación."
-            },
-            {
-                id: 5,
-                name: "Dra. Patricia Silva",
-                image: "sofia-herrera.jpg",
-                specialty: "Terapia Familiar",
-                rating: 4.8,
-                reviews: 112,
-                price: 220000,
-                location: "Híbrida",
-                avatar: "PS",
-                description: "Terapeuta familiar sistémica con experiencia en resolución de conflictos y mejora de la comunicación familiar.",
-                experience: "15 años",
-                education: "Psicología - Universidad Nacional",
-                certifications: ["Terapia Sistémica", "Terapia Familiar", "Mediación"],
-                availability: {
-                    "Lunes": "9:00 - 18:00",
-                    "Martes": "9:00 - 18:00",
-                    "Miércoles": "9:00 - 18:00",
-                    "Jueves": "9:00 - 18:00",
-                    "Sábado": "8:00 - 14:00"
-                },
-                languages: ["Español"],
-                approach: "Terapia sistémica familiar enfocada en patrones de comunicación y dinámicas relacionales."
-            },
-            {
-                id: 6,
-                name: "Dr. Roberto Vega",
-                image: "luis-torres.jpg",
-                specialty: "Trauma y EMDR",
-                rating: 4.9,
-                reviews: 78,
-                price: 240000,
-                location: "Presencial",
-                avatar: "RV",
-                description: "Especialista en trauma y EMDR, con amplia experiencia en el tratamiento de trastornos postraumáticos.",
-                experience: "11 años",
-                education: "Psicología Clínica - Universidad de los Andes",
-                certifications: ["EMDR", "Trauma", "Terapia de Exposición"],
-                availability: {
-                    "Lunes": "8:00 - 17:00",
-                    "Martes": "8:00 - 17:00",
-                    "Miércoles": "8:00 - 17:00",
-                    "Jueves": "8:00 - 17:00",
-                    "Viernes": "8:00 - 15:00"
-                },
-                languages: ["Español", "Inglés"],
-                approach: "EMDR y terapia de exposición prolongada para el tratamiento de trauma y trastornos relacionados."
-            }
+    async loadPsychologists() {
+        const fallbackImages = [
+            "ana-gonzalez.jpg",
+            "carlos-rodriguez.jpg",
+            "maria-fernandez.jpg",
+            "luis-fernandez.jpg",
+            "sofia-herrera.jpg",
+            "luis-torres.jpg",
         ];
 
+        // Verificar que la URL del API esté configurada
+        if (!PSICO_API_BASE_URL) {
+            console.error("❌ API_BASE_URL no está configurada. Verifica apiClient.js");
+            this.psychologists = [];
+            this.filteredPsychologists = [];
+            this.renderPsychologists();
+            return;
+        }
+
+        try {
+            console.log(`🔍 Cargando psicólogos desde: ${PSICO_API_BASE_URL}/psicologos/`);
+
+            const response = await fetch(`${PSICO_API_BASE_URL}/psicologos/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            console.log(`📡 Respuesta del servidor:`, response.status, response.statusText);
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("❌ Error del servidor:", errorText);
+                throw new Error(`Error ${response.status}: ${errorText || "No se pudieron cargar los psicólogos."}`);
+            }
+
+            const data = await response.json();
+            console.log(`✅ Psicólogos cargados:`, data.length);
+
+            if (!Array.isArray(data) || data.length === 0) {
+                console.warn("⚠️ No hay psicólogos en la base de datos");
+                this.psychologists = [];
+            } else {
+                this.psychologists = data.map((item, index) => ({
+                    id: item.psicologos_id,
+                    name: `${item.psicologos_name || ''} ${item.psicologos_lastname || ''}`.trim() || 'Psicólogo',
+                    image: fallbackImages[index % fallbackImages.length],
+                    specialty: item.especialidad || "Especialista en bienestar",
+                    rating: 4.8,
+                    reviews: 42 + index * 3,
+                    price: Number(item.precio_cita || 0),
+                    location: (item.modalidad || "Virtual").toUpperCase(),
+                    avatar: (item.psicologos_name || "PS").slice(0, 2).toUpperCase(),
+                    description: item.curriculom || "Profesional enfocado en tu bienestar emocional y digital.",
+                    experience: item.experiencia_anios ? `${item.experiencia_anios} años` : "Experiencia no indicada",
+                    education: item.universidad || "Universidad no registrada",
+                    certifications: ["Psicología", "Bienestar digital"],
+                    availability: {
+                        "Lunes": "9:00 - 17:00",
+                        "Martes": "9:00 - 17:00",
+                        "Miércoles": "9:00 - 17:00",
+                        "Jueves": "9:00 - 17:00",
+                        "Viernes": "9:00 - 15:00"
+                    },
+                    languages: ["Español"],
+                    approach: item.curriculom || "Acompañamiento integral con enfoque humano.",
+                }));
+            }
+        } catch (error) {
+            console.error("❌ Error al cargar psicólogos:", error);
+            console.error("Detalles:", error.message);
+            this.psychologists = [];
+
+            // Mostrar mensaje de error en la página
+            const grid = document.getElementById('psychologists-grid');
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error al cargar psicólogos</h3>
+                        <p>${error.message}</p>
+                        <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                            Verifica que el backend esté corriendo en http://localhost:8000
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
         this.filteredPsychologists = [...this.psychologists];
+        this.renderPsychologists();
     }
 
     /**
@@ -402,6 +347,299 @@ class PsychologistsManager {
     }
 
     /**
+     * Abrir modal de agendamiento de cita
+     */
+    openBookingModal(psychologistId) {
+        const psychologist = this.psychologists.find(p => p.id === psychologistId);
+        if (!psychologist) {
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('Psicólogo no encontrado', 'error');
+            }
+            return;
+        }
+
+        // Verificar que el usuario esté autenticado y sea cliente
+        const session = window.apiClient?.getSession();
+        if (!session?.access) {
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('Debes iniciar sesión para agendar una cita', 'error');
+            }
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
+            return;
+        }
+
+        if (!session?.user?.customer_id) {
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('Solo los clientes pueden agendar citas', 'error');
+            }
+            return;
+        }
+
+        this.createBookingModal(psychologist);
+    }
+
+    /**
+     * Crear modal de agendamiento
+     */
+    createBookingModal(psychologist) {
+        // Remover modal existente si hay uno
+        const existingModal = document.getElementById('booking-modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        const modal = document.createElement('div');
+        modal.id = 'booking-modal';
+        modal.className = 'psychologist-modal active';
+        modal.innerHTML = `
+            <div class="modal-content booking-modal-content">
+                <div class="modal-header">
+                    <h3>Agendar Cita con ${psychologist.name}</h3>
+                    <button class="close-btn" onclick="closeBookingModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="booking-form" class="booking-form">
+                        <div class="booking-info">
+                            <div class="booking-psychologist-info">
+                                <div class="booking-psychologist-avatar">
+                                    <img src="../images/psicologos/${psychologist.image}" alt="${psychologist.name}">
+                                </div>
+                                <div class="booking-psychologist-details">
+                                    <h4>${psychologist.name}</h4>
+                                    <p class="booking-specialty">${psychologist.specialty}</p>
+                                    <p class="booking-price">${PriceFormatter.formatCOP(psychologist.price)}/sesión</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="booking-date">Fecha de la cita <span class="required">*</span></label>
+                            <input 
+                                type="date" 
+                                id="booking-date" 
+                                name="date" 
+                                required 
+                                min="${this.getMinDate()}"
+                                aria-required="true"
+                            >
+                            <span class="form-help">Selecciona la fecha para tu cita</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="booking-time">Hora de la cita <span class="required">*</span></label>
+                            <input 
+                                type="time" 
+                                id="booking-time" 
+                                name="time" 
+                                required 
+                                min="08:00"
+                                max="18:00"
+                                aria-required="true"
+                            >
+                            <span class="form-help">Horario disponible: 8:00 AM - 6:00 PM</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="booking-modality">Modalidad <span class="required">*</span></label>
+                            <select id="booking-modality" name="modality" required aria-required="true">
+                                <option value="">Selecciona una modalidad</option>
+                                <option value="VIRTUAL">Virtual</option>
+                                <option value="PRESENCIAL">Presencial</option>
+                            </select>
+                            <span class="form-help">Elige cómo deseas realizar tu sesión</span>
+                        </div>
+
+                        <div class="booking-summary">
+                            <div class="summary-item">
+                                <span class="summary-label">Precio:</span>
+                                <span class="summary-value">${PriceFormatter.formatCOP(psychologist.price)}</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="closeBookingModal()">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Confirmar Cita</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        document.body.style.overflow = 'hidden';
+
+        // Configurar formulario
+        this.setupBookingForm(psychologist);
+    }
+
+    /**
+     * Obtener fecha mínima (hoy)
+     */
+    getMinDate() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    /**
+     * Configurar formulario de agendamiento
+     */
+    setupBookingForm(psychologist) {
+        const form = document.getElementById('booking-form');
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!this.validateBookingForm(form)) {
+                return;
+            }
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+
+            await this.submitBooking(psychologist, data);
+        });
+    }
+
+    /**
+     * Validar formulario de agendamiento
+     */
+    validateBookingForm(form) {
+        const date = form.querySelector('#booking-date').value;
+        const time = form.querySelector('#booking-time').value;
+        const modality = form.querySelector('#booking-modality').value;
+
+        if (!date) {
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('Por favor, selecciona una fecha', 'error');
+            }
+            form.querySelector('#booking-date').focus();
+            return false;
+        }
+
+        if (!time) {
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('Por favor, selecciona una hora', 'error');
+            }
+            form.querySelector('#booking-time').focus();
+            return false;
+        }
+
+        if (!modality) {
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('Por favor, selecciona una modalidad', 'error');
+            }
+            form.querySelector('#booking-modality').focus();
+            return false;
+        }
+
+        // Validar que la fecha no sea en el pasado
+        const selectedDate = new Date(`${date}T${time}`);
+        const now = new Date();
+        // Permitir citas desde hoy en adelante (con margen de 1 hora)
+        now.setHours(now.getHours() + 1);
+        if (selectedDate < now) {
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('No puedes agendar una cita en el pasado. Selecciona una fecha y hora futura.', 'error');
+            }
+            form.querySelector('#booking-date').focus();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Enviar agendamiento de cita
+     */
+    async submitBooking(psychologist, formData) {
+        const session = window.apiClient?.getSession();
+        if (!session?.access || !session?.user?.customer_id) {
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('Debes iniciar sesión para agendar una cita', 'error');
+            }
+            return;
+        }
+
+        const submitBtn = document.querySelector('#booking-form button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Confirmando...';
+        }
+
+        try {
+            const payload = {
+                customer: session.user.customer_id,
+                psicologos: psychologist.id,
+                cita_fecha: formData.date,
+                cita_hora: formData.time + ':00', // Agregar segundos
+                cita_modalidad: formData.modality,
+                cita_valor: psychologist.price.toString(),
+            };
+
+            console.log('Enviando cita:', payload);
+
+            const fetchFn = window.apiClient.fetchWithAuth || fetch;
+            const headers = window.apiClient.authHeaders();
+
+            const response = await fetchFn(
+                `${PSICO_API_BASE_URL}/citas/`,
+                {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            let result;
+            try {
+                result = await response.json();
+            } catch (jsonError) {
+                const text = await response.text();
+                console.error('Error del servidor (no JSON):', text);
+                throw new Error(`Error del servidor (${response.status}): ${response.statusText}`);
+            }
+
+            if (!response.ok) {
+                if (response.status === 401) {
+                    window.apiClient?.clearSession();
+                    throw new Error('Tu sesión expiró. Por favor, inicia sesión nuevamente.');
+                }
+
+                const detail = result?.detail || result?.error || `Error ${response.status}: ${response.statusText}`;
+                throw new Error(detail);
+            }
+
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification('¡Cita agendada exitosamente!', 'success');
+            }
+
+            // Cerrar modal después de un breve delay
+            setTimeout(() => {
+                closeBookingModal();
+            }, 1000);
+
+        } catch (error) {
+            console.error('Error al agendar cita:', error);
+            if (window.resetMentalApp) {
+                window.resetMentalApp.showNotification(error.message || 'No se pudo agendar la cita. Intenta de nuevo.', 'error');
+            }
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Confirmar Cita';
+            }
+        }
+    }
+
+    /**
      * Crear contenido del modal de psicólogo
      */
     createPsychologistModalContent(psychologist) {
@@ -466,7 +704,7 @@ class PsychologistsManager {
                     Agendar Sesión - ${PriceFormatter.formatCOP(psychologist.price)}
                 </button>
                 <button class="btn btn-outline" onclick="contactPsychologist(${psychologist.id})">
-                    Contactar
+                    Agendar Cita
                 </button>
             </div>
         `;
@@ -489,14 +727,25 @@ function closePsychologistModal() {
 }
 
 function contactPsychologist(psychologistId) {
-    if (window.resetMentalApp) {
-        window.resetMentalApp.showNotification('Función de contacto próximamente disponible', 'info');
+    if (window.psychologistsManager) {
+        window.psychologistsManager.openBookingModal(psychologistId);
     }
 }
 
 function bookSession(psychologistId) {
-    if (window.resetMentalApp) {
-        window.resetMentalApp.showNotification('Sistema de agendamiento próximamente disponible', 'info');
+    if (window.psychologistsManager) {
+        window.psychologistsManager.openBookingModal(psychologistId);
+    }
+}
+
+function closeBookingModal() {
+    const modal = document.getElementById('booking-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.remove();
+            document.body.style.overflow = '';
+        }, 300);
     }
 }
 
@@ -505,6 +754,11 @@ document.addEventListener('click', (e) => {
     const modal = document.getElementById('psychologist-modal');
     if (modal && e.target === modal) {
         closePsychologistModal();
+    }
+
+    const bookingModal = document.getElementById('booking-modal');
+    if (bookingModal && e.target === bookingModal) {
+        closeBookingModal();
     }
 });
 

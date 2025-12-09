@@ -4,12 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - ResetMental</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Usuarios - Mis Citas Pendientes - ResetMental</title>
 
     <!-- Meta tags para SEO -->
     <meta name="description"
-        content="Inicia sesión en ResetMental - Tu espacio para el bienestar mental y emocional. Accede a recursos de autocuidado y apoyo profesional.">
-    <meta name="robots" content="noindex, nofollow">
+        content="Gestiona tus citas pendientes como psicólogo en ResetMental. Visualiza y administra tus citas con clientes.">
+    <meta name="keywords" content="citas, psicólogos, gestión de citas, ResetMental">
 
     <!-- Fuentes modernas -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +26,7 @@
 
     <!-- Estilos -->
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/auth.css">
+    <link rel="stylesheet" href="../css/psychologists.css">
 </head>
 
 <body>
@@ -40,14 +43,14 @@
                 <a href="../index.html" class="nav-link">Inicio</a>
                 <a href="../index.html#nosotros" class="nav-link">Nosotros</a>
                 <a href="../index.html#bienestar" class="nav-link">Bienestar Digital</a>
-                <a href="psicologos.html" class="nav-link">Psicólogos</a>
+                <a href="usuarios.html" class="nav-link active">Usuarios</a>
                 <a href="../index.html#comunidad" class="nav-link">Comunidad</a>
                 <a href="../index.html#ayuda" class="nav-link">Ayuda</a>
             </div>
 
             <!-- Botones de acción -->
             <div class="nav-actions">
-                <a href="login.html" class="btn btn-outline active">Iniciar Sesión</a>
+                <a href="login.html" class="btn btn-outline">Iniciar Sesión</a>
                 <a href="register.html" class="btn btn-primary">Registrarse</a>
             </div>
 
@@ -61,81 +64,30 @@
     </nav>
 
     <!-- Contenido principal -->
-    <main class="auth-main">
-        <div class="auth-container">
-            <div class="auth-card">
-                <div class="auth-header">
-                    <h1 class="auth-title">Bienvenido de vuelta</h1>
-                    <p class="auth-subtitle">Inicia sesión en tu cuenta de ResetMental</p>
-                </div>
-
-                <form class="auth-form" id="login-form">
-                    <div class="form-group">
-                        <label for="email">Correo electrónico</label>
-                        <div class="input-group">
-                            <i class="fas fa-envelope input-icon"></i>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <div class="input-group">
-                            <i class="fas fa-lock input-icon"></i>
-                            <input type="password" id="password" name="password" required>
-                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="form-options">
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="remember">
-                            <span class="checkmark"></span>
-                            Recordarme
-                        </label>
-                        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary btn-full">
-                        Iniciar Sesión
-                    </button>
-                </form>
-
-
-                <div class="auth-footer">
-                    <p>¿No tienes una cuenta? <a href="register.html">Regístrate aquí</a></p>
+    <main style="margin-top: 80px;">
+        <!-- Sección Hero -->
+        <section class="psychologists-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Mis <span class="highlight">Citas Pendientes</span>
+                    </h1>
+                    <p class="hero-description">
+                        Gestiona y visualiza todas tus citas pendientes con tus clientes.
+                        Aquí encontrarás la información de cada cita: día, hora y modalidad.
+                    </p>
                 </div>
             </div>
+        </section>
 
-            <div class="auth-info">
-                <div class="info-content">
-                    <h2>Tu bienestar es nuestra prioridad</h2>
-                    <p>Accede a recursos personalizados, herramientas de autocuidado y conecta con profesionales
-                        especializados en bienestar digital.</p>
-
-                    <div class="info-features">
-                        <div class="feature">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Espacio seguro y confidencial</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-tools"></i>
-                            <span>Herramientas de autocuidado</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-user-md"></i>
-                            <span>Acceso a psicólogos especializados</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-heart"></i>
-                            <span>Comunidad de apoyo mutuo</span>
-                        </div>
-                    </div>
+        <!-- Lista de citas -->
+        <section class="psychologists-list">
+            <div class="container">
+                <div class="citas-grid" id="citas-container">
+                    <!-- Las citas se cargarán dinámicamente -->
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -148,6 +100,20 @@
                         Tu espacio para el bienestar digital y mental. Conectamos personas con recursos
                         de autocuidado y apoyo profesional para tu bienestar digital y emocional.
                     </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="footer-links">
@@ -157,7 +123,7 @@
                             <li><a href="../index.html">Inicio</a></li>
                             <li><a href="../index.html#nosotros">Nosotros</a></li>
                             <li><a href="../index.html#bienestar">Bienestar Digital</a></li>
-                            <li><a href="psicologos.html">Psicólogos</a></li>
+                            <li><a href="usuarios.html">Usuarios</a></li>
                         </ul>
                     </div>
 
@@ -192,7 +158,7 @@
     <!-- Scripts -->
     <script src="../js/apiClient.js"></script>
     <script src="../js/navigation.js"></script>
-    <script src="../js/auth.js"></script>
+    <script src="../js/usuarios.js"></script>
 </body>
 
 </html>

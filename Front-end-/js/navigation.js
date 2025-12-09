@@ -25,8 +25,49 @@ class NavigationManager {
         this.setupSmoothScrolling();
         this.setupActiveLinks();
         this.setupAnimations();
+        this.setupRoleBasedNavigation();
 
         console.log('ResetMental Navigation inicializada');
+    }
+
+    /**
+     * Configurar navegación basada en roles
+     */
+    setupRoleBasedNavigation() {
+        if (!window.apiClient) return;
+
+        const session = window.apiClient.getSession();
+        // Solo actualizar si hay una sesión activa
+        if (!session || !session.user) return;
+
+        const isPsychologist = window.apiClient.isPsychologist();
+
+        // Buscar todos los enlaces de "Psicólogos" en la navegación
+        const psicologosLinks = document.querySelectorAll('.nav-link[href*="psicologos"], .nav-link[href*="usuarios"]');
+
+        psicologosLinks.forEach(link => {
+            if (isPsychologist) {
+                // Cambiar texto y href para psicólogos
+                link.textContent = 'Usuarios';
+                const currentHref = link.getAttribute('href');
+                if (currentHref.includes('psicologos.html')) {
+                    link.setAttribute('href', 'pages/usuarios.html');
+                } else if (currentHref === '#psicologos' || currentHref.includes('#psicologos')) {
+                    link.setAttribute('href', '#usuarios');
+                } else if (!currentHref.includes('usuarios')) {
+                    link.setAttribute('href', 'pages/usuarios.html');
+                }
+            } else {
+                // Para clientes o usuarios no logueados, mantener "Psicólogos"
+                link.textContent = 'Psicólogos';
+                const currentHref = link.getAttribute('href');
+                if (currentHref.includes('usuarios.html')) {
+                    link.setAttribute('href', 'pages/psicologos.html');
+                } else if (currentHref === '#usuarios' || currentHref.includes('#usuarios')) {
+                    link.setAttribute('href', '#psicologos');
+                }
+            }
+        });
     }
 
     /**
@@ -182,5 +223,5 @@ class NavigationManager {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
-    new NavigationManager();
+    window.navigationManager = new NavigationManager();
 });

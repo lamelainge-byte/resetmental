@@ -720,3 +720,330 @@
             justify-content: center;
         }
     }
+
+    /* ========================================
+    Estilos para Citas (Vista de Usuarios para Psicólogos)
+    ======================================== */
+
+    .citas-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: var(--spacing-lg);
+        margin-top: var(--spacing-xl);
+    }
+
+    .cita-card {
+        background: var(--bg-primary);
+        border: 2px solid var(--bg-secondary);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-lg);
+        transition: var(--transition);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .cita-card:hover {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+    }
+
+    .cita-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        border-bottom: 1px solid var(--bg-secondary);
+    }
+
+    .cita-fecha {
+        display: flex;
+        gap: var(--spacing-md);
+        align-items: flex-start;
+    }
+
+    .cita-fecha i {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        margin-top: var(--spacing-xs);
+    }
+
+    .cita-dia {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        line-height: 1.4;
+        text-transform: capitalize;
+    }
+
+    .cita-hora {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        margin-top: var(--spacing-xs);
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+    }
+
+    .cita-hora i {
+        font-size: 0.9rem;
+        color: var(--primary-color);
+    }
+
+    .cita-modalidad {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--border-radius);
+        font-size: 0.9rem;
+        font-weight: 500;
+        background: var(--bg-secondary);
+    }
+
+    .cita-modalidad.virtual {
+        background: rgba(78, 205, 196, 0.1);
+        color: var(--primary-color);
+    }
+
+    .cita-modalidad.presencial {
+        background: rgba(245, 230, 211, 0.5);
+        color: var(--text-primary);
+    }
+
+    .cita-modalidad i {
+        font-size: 1rem;
+    }
+
+    .cita-body {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .cita-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cita-label {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .cita-value {
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+
+    .cita-estado {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--border-radius);
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .cita-estado.estado-pendiente {
+        background: rgba(255, 193, 7, 0.2);
+        color: #856404;
+    }
+
+    .cita-estado.estado-confirmada {
+        background: rgba(40, 167, 69, 0.2);
+        color: #155724;
+    }
+
+    .cita-estado.estado-cancelada {
+        background: rgba(220, 53, 69, 0.2);
+        color: #721c24;
+    }
+
+    .cita-estado.estado-finalizada {
+        background: rgba(108, 117, 125, 0.2);
+        color: #383d41;
+    }
+
+    /* Responsive para citas */
+    @media (max-width: 768px) {
+        .citas-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .cita-header {
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .cita-modalidad {
+            align-self: flex-start;
+        }
+    }
+
+    /* ========================================
+    Estilos para Modal de Agendamiento de Cita
+    ======================================== */
+
+    .booking-modal-content {
+        max-width: 600px;
+        width: 90%;
+    }
+
+    .booking-form {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+
+    .booking-info {
+        background: var(--bg-secondary);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .booking-psychologist-info {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+    }
+
+    .booking-psychologist-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        border: 3px solid var(--primary-color);
+    }
+
+    .booking-psychologist-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .booking-psychologist-details h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .booking-specialty {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .booking-price {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .booking-form .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+
+    .booking-form label {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+    }
+
+    .booking-form .required {
+        color: #e74c3c;
+    }
+
+    .booking-form input[type="date"],
+    .booking-form input[type="time"],
+    .booking-form select {
+        padding: var(--spacing-md);
+        border: 2px solid var(--bg-secondary);
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-family: var(--font-secondary);
+        transition: var(--transition);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+    }
+
+    .booking-form input[type="date"]:focus,
+    .booking-form input[type="time"]:focus,
+    .booking-form select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+    }
+
+    .form-help {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        font-style: italic;
+    }
+
+    .booking-summary {
+        background: rgba(78, 205, 196, 0.1);
+        border: 2px solid var(--primary-color);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) 0;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .summary-label {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 1rem;
+    }
+
+    .summary-value {
+        font-weight: 700;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: var(--spacing-md);
+        justify-content: flex-end;
+        margin-top: var(--spacing-lg);
+        padding-top: var(--spacing-lg);
+        border-top: 1px solid var(--bg-secondary);
+    }
+
+    .form-actions .btn {
+        min-width: 120px;
+    }
+
+    /* Responsive para modal de agendamiento */
+    @media (max-width: 768px) {
+        .booking-modal-content {
+            width: 95%;
+            max-width: none;
+        }
+
+        .booking-psychologist-info {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+        }
+    }

@@ -8,8 +8,11 @@
  * - Notificaciones y estados de carga
  */
 
+const AUTH_API_BASE_URL = window.apiClient?.API_BASE_URL || '';
+
 class AuthManager {
   constructor() {
+    this.apiClient = window.apiClient;
     this.init();
   }
 
@@ -17,6 +20,7 @@ class AuthManager {
     this.setupLoginForm();
     this.setupRegisterForm();
     this.setupPasswordStrength();
+    this.loadDocumentTypes();
 
     console.log('ResetMental Auth Manager inicializado');
   }
@@ -72,6 +76,33 @@ class AuthManager {
 
       // Configurar validación de teléfono
       this.setupPhoneValidation();
+    }
+  }
+
+  /**
+   * Cargar tipos de documento desde el backend
+   */
+  async loadDocumentTypes() {
+    const select = document.getElementById('documentType');
+    if (!select || !AUTH_API_BASE_URL) return;
+
+    try {
+      const response = await fetch(`${AUTH_API_BASE_URL}/typedocuments/`);
+      if (!response.ok) {
+        throw new Error('No se pudieron cargar los tipos de documento');
+      }
+
+      const data = await response.json();
+      select.innerHTML = '<option value="">Selecciona un tipo</option>';
+      data.forEach((item) => {
+        const option = document.createElement('option');
+        option.value = item.type_id;
+        option.textContent = item.type_name;
+        select.appendChild(option);
+      });
+    } catch (error) {
+      console.error(error);
+      // Si falla, mantenemos las opciones existentes
     }
   }
 
@@ -277,7 +308,7 @@ class AuthManager {
   /**
    * Manejar login
    */
-  handleLogin(form) {
+  async handleLogin(form) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
@@ -286,24 +317,53 @@ class AuthManager {
       return;
     }
 
-    // Simular login
     this.showLoading(form);
+    try {
+      const response = await fetch(`${AUTH_API_BASE_URL}/api/token/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: data.email,
+          password: data.password,
+        }),
+      });
 
-    setTimeout(() => {
-      this.hideLoading(form);
+      const result = await response.json();
+      if (!response.ok) {
+        const detail = result?.detail || 'Credenciales inválidas';
+        throw new Error(detail);
+      }
+
+      if (this.apiClient) {
+        this.apiClient.saveSession({
+          access: result.access,
+          refresh: result.refresh,
+          user: result.user,
+        });
+
+        // Actualizar navegación basada en roles después de guardar la sesión
+        if (window.navigationManager) {
+          window.navigationManager.setupRoleBasedNavigation();
+        }
+      }
+
       this.showNotification('¡Bienvenido de vuelta!', 'success');
-
-      // Redirigir al dashboard o página principal
       setTimeout(() => {
         window.location.href = '../index.html';
-      }, 1500);
-    }, 2000);
+      }, 800);
+    } catch (error) {
+      this.showNotification(error.message, 'error');
+    } finally {
+      this.hideLoading(form);
+    }
   }
 
   /**
    * Manejar registro
    */
-  handleRegister(form) {
+  async handleRegister(form) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
@@ -312,18 +372,68 @@ class AuthManager {
       return;
     }
 
-    // Simular registro
     this.showLoading(form);
+    try {
+      const payload = {
+        username: data.email,
+        email: data.email,
+        password: data.password,
+        first_name: data.firstName,
+        last_name: data.lastName,
+        rol: data.userType === 'psicologo' ? 2 : 1,
+        type_document: Number(data.documentType),
+        customer_document: data.documentNumber,
+        customer_name: data.firstName,
+        customer_lastname: data.lastName,
+        customer_email: data.email,
+        customer_cellphone: data.phone || null,
+        customer_motivo: data.registrationReason || '',
+        psicologos_document: data.documentNumber,
+        psicologos_name: data.firstName,
+        psicologos_lastname: data.lastName,
+        psicologos_email: data.email,
+        psicologos_cellphone: data.phone || null,
+      };
 
-    setTimeout(() => {
-      this.hideLoading(form);
+      const response = await fetch(`${AUTH_API_BASE_URL}/auth/register/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        const errorMessage =
+          result?.detail ||
+          Object.values(result || {})[0] ||
+          'No pudimos crear la cuenta. Intenta de nuevo.';
+        throw new Error(errorMessage);
+      }
+
+      if (this.apiClient && result.access) {
+        this.apiClient.saveSession({
+          access: result.access,
+          refresh: result.refresh,
+          user: result.user,
+        });
+
+        // Actualizar navegación basada en roles después de guardar la sesión
+        if (window.navigationManager) {
+          window.navigationManager.setupRoleBasedNavigation();
+        }
+      }
+
       this.showNotification('¡Cuenta creada exitosamente!', 'success');
-
-      // Redirigir al login
       setTimeout(() => {
         window.location.href = 'login.html';
-      }, 1500);
-    }, 2000);
+      }, 1200);
+    } catch (error) {
+      this.showNotification(error.message, 'error');
+    } finally {
+      this.hideLoading(form);
+    }
   }
 
   /**
@@ -517,7 +627,8 @@ class AuthManager {
    * Validar email
    */
   validateEmail(input) {
-    const email = input.value.trim();
+    // Aceptar tanto elemento DOM como objeto con value
+    const email = (input && input.value !== undefined) ? input.value.trim() : (typeof input === 'string' ? input.trim() : '');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email) {
@@ -530,7 +641,10 @@ class AuthManager {
       return false;
     }
 
-    this.clearFieldError(input);
+    // Solo limpiar error si input es un elemento DOM
+    if (input && typeof input.closest === 'function') {
+      this.clearFieldError(input);
+    }
     return true;
   }
 
@@ -538,7 +652,8 @@ class AuthManager {
    * Validar contraseña
    */
   validatePassword(input) {
-    const password = input.value;
+    // Aceptar tanto elemento DOM como objeto con value
+    const password = (input && input.value !== undefined) ? input.value : (typeof input === 'string' ? input : '');
 
     if (!password) {
       this.showFieldError('password', 'La contraseña es requerida');
@@ -555,7 +670,10 @@ class AuthManager {
       return false;
     }
 
-    this.clearFieldError(input);
+    // Solo limpiar error si input es un elemento DOM
+    if (input && typeof input.closest === 'function') {
+      this.clearFieldError(input);
+    }
     return true;
   }
 

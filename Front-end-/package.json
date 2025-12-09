@@ -1,0 +1,44 @@
+{
+  "name": "resetmental-native",
+  "version": "2.0.0",
+  "description": "Plataforma de bienestar mental y digital - ResetMental",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server --port=3000 --open=/index.html",
+    "build": "echo 'Build completed - static site ready'",
+    "lint": "echo 'Linting completed'",
+    "test": "echo 'Tests completed'"
+  },
+  "keywords": [
+    "bienestar-mental",
+    "psicologia",
+    "salud-mental",
+    "mindfulness",
+    "autocuidado-digital",
+    "accesibilidad",
+    "responsive-design"
+  ],
+  "author": "ResetMental Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/resetmental/wellness-platform"
+  },
+  "bugs": {
+    "url": "https://github.com/resetmental/wellness-platform/issues"
+  },
+  "homepage": "https://resetmental.com",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psicólogos Especializados - ResetMental</title>
+
+  <!-- Meta tags para SEO -->
+  <meta name="description"
+    content="Encuentra psicólogos especializados en bienestar digital y salud mental. Conecta con profesionales certificados que te ayudarán en tu camino hacia el bienestar.">
+  <meta name="keywords" content="psicólogos, salud mental, bienestar digital, terapia, apoyo psicológico, ResetMental">
+
+  <!-- Fuentes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/psychologists.css">
+</head>
+
+<body>
+  <!-- Barra de navegación fija -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <!-- Logo -->
+      <div class="nav-logo">
+        <a href="../index.html" class="logo-link">ResetMental</a>
+      </div>
+
+      <!-- Menú de navegación -->
+      <div class="nav-menu" id="nav-menu">
+        <a href="../index.html" class="nav-link">Inicio</a>
+        <a href="../index.html#nosotros" class="nav-link">Nosotros</a>
+        <a href="../index.html#bienestar" class="nav-link">Bienestar Digital</a>
+        <a href="psicologos.html" class="nav-link active">Psicólogos</a>
+        <a href="../index.html#comunidad" class="nav-link">Comunidad</a>
+        <a href="../index.html#ayuda" class="nav-link">Ayuda</a>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Iniciar Sesión</a>
+        <a href="register.html" class="btn btn-primary">Registrarse</a>
+      </div>
+
+      <!-- Menú hamburguesa para móvil -->
+      <div class="hamburger" id="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main style="margin-top: 80px;">
+    <!-- Sección Hero -->
+    <section class="psychologists-hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Encuentra tu <span class="highlight">psicólogo especializado</span>
+          </h1>
+          <p class="hero-description">
+            Conecta con profesionales certificados en bienestar digital y salud mental.
+            Encuentra el apoyo que necesitas para tu camino hacia el bienestar.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">50+</span>
+              <span class="stat-label">Psicólogos certificados</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">15+</span>
+              <span class="stat-label">Especialidades</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">98%</span>
+              <span class="stat-label">Satisfacción</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filtros de búsqueda -->
+    <section class="search-filters">
+      <div class="container">
+        <div class="filters-container">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="Buscar por nombre, especialidad o ubicación...">
+          </div>
+
+          <div class="filters">
+            <select id="specialty-filter" class="filter-select">
+              <option value="">Todas las especialidades</option>
+              <option value="ansiedad">Ansiedad y Estrés</option>
+              <option value="depresion">Depresión</option>
+              <option value="bienestar-digital">Bienestar Digital</option>
+              <option value="terapia-cognitiva">Terapia Cognitiva</option>
+              <option value="mindfulness">Mindfulness</option>
+              <option value="terapia-familiar">Terapia Familiar</option>
+              <option value="terapia-pareja">Terapia de Pareja</option>
+              <option value="trauma">Trauma y EMDR</option>
+            </select>
+
+            <select id="location-filter" class="filter-select">
+              <option value="">Todas las ubicaciones</option>
+              <option value="presencial">Presencial</option>
+              <option value="virtual">Virtual</option>
+              <option value="hibrida">Híbrida</option>
+            </select>
+
+            <select id="price-filter" class="filter-select">
+              <option value="">Todos los precios</option>
+              <option value="0-50000">$0 - $50.000</option>
+              <option value="100000-150000">$100.000 - $150.000</option>
+              <option value="200000-250000">$200.000 - $250.000</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lista de psicólogos -->
+    <section class="psychologists-list">
+      <div class="container">
+        <div class="psychologists-grid" id="psychologists-grid">
+          <!-- Los psicólogos se cargarán dinámicamente -->
+        </div>
+
+        <div class="load-more-container">
+          <button class="btn btn-outline" id="load-more-btn">Cargar más psicólogos</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de información -->
+    <section class="psychologists-info">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3>Confidencialidad<br>Total</h3>
+            <p>Tu privacidad es nuestra prioridad. Todas las sesiones son completamente confidenciales.</p>
+          </div>
+
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Horarios<br>Flexibles</h3>
+            <p>Encuentra horarios que se adapten a tu rutina, incluyendo fines de semana y horarios nocturnos.</p>
+          </div>
+
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="fas fa-video"></i>
+            </div>
+            <h3>Sesiones<br>Virtuales</h3>
+            <p>Accede a terapia desde la comodidad de tu hogar con sesiones virtuales de alta calidad.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3 class="footer-logo">ResetMental</h3>
+          <p class="footer-description">
+            Tu espacio para el bienestar digital y mental. Conectamos personas con recursos
+            de autocuidado y apoyo profesional para tu bienestar digital y emocional.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Navegación</h4>
+            <ul>
+              <li><a href="../index.html">Inicio</a></li>
+              <li><a href="../index.html#nosotros">Nosotros</a></li>
+              <li><a href="../index.html#bienestar">Bienestar Digital</a></li>
+              <li><a href="psicologos.html">Psicólogos</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Recursos</h4>
+            <ul>
+              <li><a href="../index.html#comunidad">Comunidad</a></li>
+              <li><a href="../index.html#ayuda">Ayuda</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="terminos.html">Términos y Condiciones</a></li>
+              <li><a href="privacidad.html">Política de Privacidad</a></li>
+              <li><a href="cookies.html">Política de Cookies</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">
+          © 2025 ResetMental. Todos los derechos reservados.
+        </p>
+        <p class="team-info">
+          Equipo: Melissa Saenz, David Paez, Maria Perilla, Santiago Camacho, Erick Criollo
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de psicólogo -->
+  <div class="psychologist-modal" id="psychologist-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-psychologist-name">Nombre del Psicólogo</h3>
+        <button class="close-btn" onclick="closePsychologistModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-psychologist-content">
+        <!-- Contenido del psicólogo se cargará aquí -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/navigation.js"></script>
+  <script src="../js/psychologists.js"></script>
+</body>
+
+</html>

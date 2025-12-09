@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Servicios - ResetMental</title>
+  <!--header y footer (index)-->
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <!--Iconos-->
+  <script src="https://kit.fontawesome.com/a0fe0f97f9.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <!-- Header Moderno -->
+  <header class="modern-header">
+    <nav class="navbar-modern">
+      <div class="nav-brand">
+        <span class="brand-text">ResetMental</span>
+      </div>
+
+      <div class="nav-menu" id="nav-menu">
+        <a href="../index.html" class="nav-link">Inicio</a>
+        <a href="../index.html#nosotros" class="nav-link">Nosotros</a>
+        <a href="../index.html#espacio-desestresarte" class="nav-link">Bienestar</a>
+        <a href="./psicologos.html" class="nav-link">Psicólogos</a>
+        <a href="../index.html#comunidad" class="nav-link">Comunidad</a>
+        <a href="./questions.html" class="nav-link">Ayuda</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="./login.html" class="btn-login">Iniciar Sesión</a>
+        <a href="./register.html" class="btn-register">Registrarse</a>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+  <main>
+
+    <!-- CONTROLES ACCECIBILIDAD -->
+    <section class="botones-accesibilidad">
+      <button id="aumentarFuente">A+</button>
+      <button id="disminuirFuente"">A-</button>
+      <button class=" contrast-btn" id="contraste">
+        <img src="/images/accecibility/contrast-icon.webp" alt="🌗">
+      </button>
+    </section>
+
+    <!--MIGAS DE PAN-->
+    <section class="migas-pan">
+      <div class="migas-container">
+        <a href="/index.html">página principal</a>
+        <span>></span>
+        <a href="./servicios.html">servicios</a>
+      </div>
+    </section>
+
+    <section class="intro-servicios">
+      <img src="/images/services/services-icon.svg" alt="services icon">
+      <h1>Bienvenido al centro de recursos</h1>
+      <p>
+        En este espacio puedes buscar universidades, líneas de apoyo y centros
+        especializados sin costo. Filtra según tu necesidad y encuentra la
+        ayuda que buscas de forma clara y confiable
+      </p>
+    </section>
+
+    <!--Carga de recursos-->
+    <section class="recursos-cards">
+      <!-- Template para las cards -->
+      <template id="contenido-servicios">
+        <article class="servicio-card">
+          <div class="img-conteiner">
+            <img class="imagen-serv" id="imagen-serv" src="" alt="imagen del servicio" />
+          </div>
+
+          <div class="content-card-container">
+            <h2 class="nombre-serv"><span id="nombre-serv"></span></h2>
+            <ul>
+              <li class="id-serv">Id: <span id="id-serv"></span></li>
+              <li>Origen: <span id="origen-serv"></span></li>
+              <li>Ciudad: <span id="ciudad-serv"></span></li>
+              <li>Modalidad: <span id="modalidad-serv"></span></li>
+              <li>Detalles: <span id="detalles-serv"></span></li>
+              <li>número: <span id="numero-serv"></span></li>
+              <li>correo: <span id="correo-serv"></span></li>
+              <li>dirección: <span id="direccion-serv"></span></li>
+              <li>Costo (COP): <span id="costo-serv"></span></li>
+            </ul>
+            <section class="acciones" id="acciones">
+              <button class="btn-editar" id="btn-editar">Editar</button>
+              <button class="btn-eliminar" id="btn-eliminar">
+                Eliminar
+              </button>
+            </section>
+          </div>
+        </article>
+      </template>
+
+      <!-- Contenedor donde se insertarán las cards - CON LA CLASE CORRECTA -->
+      <section class="lista-servicios cards-space" id="lista-servicios">
+        <!-- Las cards se generarán aquí dinámicamente -->
+      </section>
+    </section>
+  </main>
+  <!--FOOTER-->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-column">
+        <h4>Datos de contacto</h4>
+        <p>Cra. 33A #30-20, Bogotá</p>
+        <p>(1) 234 5678</p>
+        <p>+57 3137737015</p>
+        <p>gestorprincipal@mindbridge.com</p>
+      </div>
+      <div class="footer-column">
+        <h4>Atajos</h4>
+        <ul>
+          <li><a href="./pages/servicios.html">Centro de recursos</a></li>
+          <li><a href="./pages/psicologos.html">Psicólogos para ti</a></li>
+          <li><a href="./psicologos-unidos.html">Psicólogos unidos</a></li>
+          <li><a href="/pages/questions.html">Preguntas frecuentes</a></li>
+          <li>
+            <a href="./pages/ingresar.html">Iniciar sesión</a>
+          </li>
+          <li><a href="/pages/terminosCondiciones.html">Terminos y Condiciones</a></li>
+          <li>
+            <a href="/index.html#PQR">poner un PQR</a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Lideres</h4>
+        <p>Melissa Saenz</p>
+        <p>David Paez</p>
+        <p>Maria Perilla</p>
+        <p>Santiago Camacho</p>
+        <p>Erick Criollo</p>
+      </div>
+      <div class="footer-column social-media">
+        <h4>Redes sociales</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-x-twitter"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <p>© 2025 ResetMental. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+  <script type="module" src="/js/admin-view/principal.js"></script>
+  <script src="../js/accessibility.js"></script>
+  <script src="../js/navigation.js"></script>
+</body>
+
+</html>

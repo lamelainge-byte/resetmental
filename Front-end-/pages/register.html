@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta - ResetMental</title>
+
+    <!-- Meta tags para SEO -->
+    <meta name="description"
+        content="Únete a ResetMental - Empieza tu camino hacia el equilibrio digital y emocional. Crea tu cuenta y accede a recursos de bienestar mental.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Fuentes modernas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+
+<body>
+    <!-- Barra de navegación fija -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="nav-logo">
+                <a href="../index.html" class="logo-link">ResetMental</a>
+            </div>
+
+            <!-- Menú de navegación -->
+            <div class="nav-menu" id="nav-menu">
+                <a href="../index.html" class="nav-link">Inicio</a>
+                <a href="../index.html#nosotros" class="nav-link">Nosotros</a>
+                <a href="../index.html#bienestar" class="nav-link">Bienestar Digital</a>
+                <a href="psicologos.html" class="nav-link">Psicólogos</a>
+                <a href="../index.html#comunidad" class="nav-link">Comunidad</a>
+                <a href="../index.html#ayuda" class="nav-link">Ayuda</a>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-outline">Iniciar Sesión</a>
+                <a href="register.html" class="btn btn-primary active">Registrarse</a>
+            </div>
+
+            <!-- Menú hamburguesa para móvil -->
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1 class="auth-title">Únete a ResetMental</h1>
+                    <p class="auth-subtitle">Crea tu cuenta y comienza tu camino hacia el bienestar</p>
+                </div>
+
+                <form class="auth-form" id="register-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Nombre</label>
+                            <div class="input-group">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Apellido</label>
+                            <div class="input-group">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Teléfono (opcional)</label>
+                        <div class="input-group">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" id="phone" name="phone" inputmode="numeric" pattern="[0-9]*"
+                                placeholder="Solo números">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="documentType">Tipo de documento</label>
+                        <div class="input-group">
+                            <i class="fas fa-id-card input-icon"></i>
+                            <select id="documentType" name="documentType" required>
+                                <option value="">Selecciona un tipo</option>
+                                <option value="cedula">Cédula</option>
+                                <option value="tarjeta_identidad">Tarjeta de identidad</option>
+                                <option value="pasaporte">Pasaporte</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="documentNumber">Número de documento</label>
+                        <div class="input-group">
+                            <i class="fas fa-hashtag input-icon"></i>
+                            <input type="text" id="documentNumber" name="documentNumber" inputmode="numeric"
+                                pattern="[0-9]*" required placeholder="Solo números">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" name="password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength" id="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span class="strength-text">Ingresa una contraseña</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmar contraseña</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userType">Tipo de usuario</label>
+                        <div class="input-group">
+                            <i class="fas fa-users input-icon"></i>
+                            <select id="userType" name="userType" required>
+                                <option value="">Selecciona tu tipo de usuario</option>
+                                <option value="usuario">Cliente</option>
+                                <option value="psicologo">Psicólogo profesional</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="registrationReasonGroup"
+                        style="display: none; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease;">
+                        <div class="input-group has-textarea">
+                            <i class="fas fa-comment-alt input-icon"></i>
+                            <textarea id="registrationReason" name="registrationReason" rows="4"
+                                placeholder="Cuéntanos el motivo por el cual quieres crear una cuenta..."></textarea>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary btn-full">
+                        Crear Cuenta
+                    </button>
+                </form>
+
+
+                <div class="auth-footer">
+                    <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+                </div>
+            </div>
+
+            <div class="auth-info">
+                <div class="info-content">
+                    <h2>Comienza tu transformación</h2>
+                    <p>Únete a miles de personas que han encontrado equilibrio y bienestar en su vida digital y
+                        emocional.</p>
+
+                    <div class="info-features">
+                        <div class="feature">
+                            <i class="fas fa-heart"></i>
+                            <span>Recursos personalizados de autocuidado</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-users"></i>
+                            <span>Comunidad de apoyo mutuo</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Seguimiento de tu progreso</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Acceso a eventos y talleres</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Espacio seguro y confidencial</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3 class="footer-logo">ResetMental</h3>
+                    <p class="footer-description">
+                        Tu espacio para el bienestar digital y mental. Conectamos personas con recursos
+                        de autocuidado y apoyo profesional para tu bienestar digital y emocional.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navegación</h4>
+                        <ul>
+                            <li><a href="../index.html">Inicio</a></li>
+                            <li><a href="../index.html#nosotros">Nosotros</a></li>
+                            <li><a href="../index.html#bienestar">Bienestar Digital</a></li>
+                            <li><a href="psicologos.html">Psicólogos</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Recursos</h4>
+                        <ul>
+                            <li><a href="../index.html#comunidad">Comunidad</a></li>
+                            <li><a href="../index.html#ayuda">Ayuda</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="terminos.html">Términos y Condiciones</a></li>
+                            <li><a href="privacidad.html">Política de Privacidad</a></li>
+                            <li><a href="cookies.html">Política de Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">
+                    © 2025 ResetMental. Todos los derechos reservados.
+                </p>
+                <p class="team-info">
+                    Equipo: Melissa Saenz, David Paez, Maria Perilla, Santiago Camacho, Erick Criollo
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/navigation.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+
+</html>

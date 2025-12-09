@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResetMental - Tu Espacio de Bienestar Digital</title>
+
+  <!-- Meta tags para SEO -->
+  <meta name="description"
+    content="ResetMental - Tu espacio de bienestar digital y mental. Descubre herramientas de autocuidado, recursos de mindfulness y apoyo profesional para tu salud mental.">
+  <meta name="keywords" content="salud mental, bienestar digital, mindfulness, psicólogos, autocuidado, ResetMental">
+  <meta name="author" content="ResetMental Team">
+
+  <!-- Fuentes modernas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+  <!-- Navegación Principal -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <!-- Marca -->
+      <div class="nav-logo">
+        <a href="#inicio" class="logo-link">ResetMental</a>
+      </div>
+
+      <!-- Navegación -->
+      <div class="nav-menu" id="nav-menu">
+        <a href="#inicio" class="nav-link active">Inicio</a>
+        <a href="#nosotros" class="nav-link">Nosotros</a>
+        <a href="#bienestar" class="nav-link">Bienestar Digital</a>
+        <a href="pages/psicologos.html" class="nav-link">Psicólogos</a>
+        <a href="#comunidad" class="nav-link">Comunidad</a>
+        <a href="#ayuda" class="nav-link">Ayuda</a>
+      </div>
+
+      <!-- Acciones -->
+      <div class="nav-actions">
+        <a href="pages/login.html" class="btn btn-outline">Iniciar Sesión</a>
+        <a href="pages/register.html" class="btn btn-primary">Registrarse</a>
+      </div>
+
+      <!-- Menú Móvil -->
+      <div class="hamburger" id="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido -->
+  <main>
+    <!-- Hero -->
+    <section id="inicio" class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Tu espacio de <span class="highlight">bienestar digital</span>
+          </h1>
+          <p class="hero-description">
+            Descubre herramientas de autocuidado, recursos de mindfulness y apoyo profesional
+            para cuidar tu salud mental en el mundo digital.
+          </p>
+          <div class="hero-actions">
+            <a href="#bienestar" class="btn btn-primary btn-large">Explora tu Bienestar</a>
+            <a href="pages/psicologos.html" class="btn btn-outline btn-large">Encuentra Apoyo</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="images\principal-page\psicologos-comunidad.png" alt="Visual hero" class="hero-image">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Nosotros -->
+    <section id="nosotros" class="about">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Un espacio seguro para tu bienestar</h2>
+          <p class="section-description">
+            En ResetMental creemos que el bienestar mental y digital van de la mano.
+            Te ofrecemos un espacio seguro donde encontrar apoyo profesional, recursos
+            gratuitos y herramientas prácticas para cuidar tu salud mental.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Espacio Seguro</h3>
+            <p>Un entorno protegido y confidencial para tu bienestar</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-tools"></i>
+            </div>
+            <h3>Herramientas Prácticas</h3>
+            <p>Recursos y técnicas para el autocuidado diario</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-user-md"></i>
+            </div>
+            <h3>Apoyo Profesional</h3>
+            <p>Conexión con psicólogos especializados en bienestar digital</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bienestar Digital -->
+    <section id="bienestar" class="wellness">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Espacio para Desestresarte</h2>
+          <p class="section-description">
+            Herramientas interactivas para tu bienestar mental y digital
+          </p>
+        </div>
+
+        <div class="wellness-grid">
+          <div class="wellness-card">
+            <div class="card-icon">
+              <i class="fas fa-lungs"></i>
+            </div>
+            <h3>Ejercicio de Respiración</h3>
+            <p>Técnicas de respiración para reducir el estrés y la ansiedad</p>
+            <button class="btn btn-wellness" onclick="startBreathingExercise()">Comenzar</button>
+          </div>
+
+          <div class="wellness-card">
+            <div class="card-icon">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Consejos Digitales</h3>
+            <p>Mejores prácticas para un uso saludable de la tecnología</p>
+            <button class="btn btn-wellness" onclick="showDigitalTips()">Ver Consejos</button>
+          </div>
+
+          <div class="wellness-card">
+            <div class="card-icon">
+              <i class="fas fa-spa"></i>
+            </div>
+            <h3>Autocuidado</h3>
+            <p>Rutinas y actividades para tu bienestar personal</p>
+            <button class="btn btn-wellness" onclick="showSelfCareTips()">Explorar</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Comunidad -->
+    <section id="comunidad" class="community">
+      <div class="container">
+        <div class="community-content">
+          <div class="community-text">
+            <h2 class="section-title">Únete a nuestra comunidad</h2>
+            <p class="section-description">
+              Conecta con personas que comparten tu interés por el bienestar mental y digital.
+              Participa en conversaciones significativas, comparte experiencias y encuentra apoyo mutuo.
+            </p>
+            <div class="community-stats">
+              <div class="stat">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Miembros activos</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Psicólogos especializados</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">1000+</span>
+                <span class="stat-label">Recursos disponibles</span>
+              </div>
+            </div>
+            <div class="community-actions">
+              <a href="pages/register.html" class="btn btn-primary">Únete Ahora</a>
+            </div>
+          </div>
+          <div class="community-visual">
+            <div class="community-illustration">
+              <div class="illustration-circle circle-1"></div>
+              <div class="illustration-circle circle-2"></div>
+              <div class="illustration-circle circle-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ayuda -->
+    <section id="ayuda" class="help">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">¿Necesitas ayuda?</h2>
+          <p class="section-description">
+            Estamos aquí para apoyarte. Envía tus PQRS y te responderemos a la brevedad.
+          </p>
+        </div>
+
+        <div class="help-grid">
+          <div class="help-card">
+            <div class="help-icon">
+              <i class="fas fa-clipboard-list"></i>
+            </div>
+            <h3>PQRS</h3>
+            <p>Peticiones, Quejas, Reclamos y Sugerencias. Tu opinión es importante para nosotros</p>
+            <button class="btn btn-outline" onclick="openPQRForm()">Enviar PQRS</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3 class="footer-logo">ResetMental</h3>
+          <p class="footer-description">
+            Tu espacio para el bienestar digital y mental. Conectamos personas con recursos
+            de autocuidado y apoyo profesional para tu bienestar digital y emocional.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4>Navegación</h4>
+            <ul>
+              <li><a href="#inicio">Inicio</a></li>
+              <li><a href="#nosotros">Nosotros</a></li>
+              <li><a href="#bienestar">Bienestar Digital</a></li>
+              <li><a href="pages/psicologos.html">Psicólogos</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Recursos</h4>
+            <ul>
+              <li><a href="#comunidad">Comunidad</a></li>
+              <li><a href="#ayuda">Ayuda</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="pages/terminos.html">Términos y Condiciones</a></li>
+              <li><a href="pages/privacidad.html">Política de Privacidad</a></li>
+              <li><a href="pages/cookies.html">Política de Cookies</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">
+          © 2025 ResetMental. Todos los derechos reservados.
+        </p>
+        <p class="team-info">
+          Equipo: Melissa Saenz, David Paez, Maria Perilla, Santiago Camacho, Erick Criollo
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/navigation.js"></script>
+  <script src="js/wellness.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
